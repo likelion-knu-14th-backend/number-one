@@ -66,13 +66,6 @@ public class StudentController {
     // DELETE - 학번 기준 삭제
     @DeleteMapping("/{studentNumber}")
     public void deleteStudent(@PathVariable String studentNumber) {
-        for (int i = 0; i < studentStore.size(); i++) {
-            StudentResponseDto student = studentStore.get(i);
-
-            if (student.getStudent_id().equals(studentNumber)) {
-                studentStore.remove(i);
-                break;
-            }
-        }
+        studentStore.removeIf(student -> student.getStudent_id().equals(studentNumber));
     }
 }
