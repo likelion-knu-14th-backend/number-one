@@ -1,11 +1,11 @@
-package hello.numberone;
+package hello.numberone.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public class StudentResponseDto {
+@NoArgsConstructor
+public class StudentCreateRequestDto {
 
     private String name;
     private String studentNumber;
