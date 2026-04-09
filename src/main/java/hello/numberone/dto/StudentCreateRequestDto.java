@@ -1,4 +1,4 @@
-package hello.numberone;
+package hello.numberone.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
