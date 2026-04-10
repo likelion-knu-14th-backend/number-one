@@ -1,6 +1,6 @@
 package hello.numberone.dto;
 
-import hello.numberone.enity.ToDoList;
+import hello.numberone.entity.ToDoList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
