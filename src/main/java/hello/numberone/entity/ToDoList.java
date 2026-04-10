@@ -21,13 +21,13 @@ public class ToDoList {
 
     private String title;
 
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false) //null값을 허용 안함 값이 있어야함. (true or false)
     private Boolean isCompleted;
 
     private LocalDate dueDate;
 
-    public ToDoList(Long id,String title, Boolean isCompleted, LocalDate dueDate) {
-        this.id = id;
+    public ToDoList(String title, Boolean isCompleted, LocalDate dueDate) {
+
         this.title = title;
         this.isCompleted = isCompleted;
         this.dueDate = dueDate;

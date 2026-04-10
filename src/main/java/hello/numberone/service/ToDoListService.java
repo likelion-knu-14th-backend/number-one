@@ -17,7 +17,6 @@ public class ToDoListService {
 
     public ToDoListResponseDto createToDoList(ToDoListRequestDto request) {
         ToDoList toDoList = new ToDoList(
-                request.getId(),
                 request.getTitle(),
                 request.getIsCompleted(),
                 request.getDueDate()
@@ -41,12 +40,12 @@ public class ToDoListService {
         return new ToDoListResponseDto(toDoList);
     }
 
-    public ToDoListResponseDto updateToDoList(Long ToDoListId, ToDoListRequestDto request) {
-        ToDoList toDoList = toDoListRepository.findById(ToDoListId)
+    public ToDoListResponseDto updateToDoList(Long toDoListId, ToDoListRequestDto request) {
+        ToDoList toDoList = toDoListRepository.findById(toDoListId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
 
         toDoList.update(
-                request.getId(),
+                toDoListId,
                 request.getTitle(),
                 request.getIsCompleted(),
                 request.getDueDate()
