@@ -1,8 +1,8 @@
-package hello.numberone.controller;
+package hello.numberone.domain.student.controller;
 
-import hello.numberone.dto.StudentCreateRequestDto;
-import hello.numberone.dto.StudentResponseDto;
-import hello.numberone.service.StudentService;
+import hello.numberone.domain.student.dto.StudentCreateRequestDto;
+import hello.numberone.domain.student.dto.StudentResponseDto;
+import hello.numberone.domain.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,3 +48,4 @@ public class StudentController {
         studentService.deleteStudent(studentNumber);
     }
 }
+

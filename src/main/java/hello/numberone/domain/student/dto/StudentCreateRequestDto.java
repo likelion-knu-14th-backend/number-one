@@ -1,4 +1,4 @@
-package hello.numberone.dto;
+package hello.numberone.domain.student.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,3 +12,4 @@ public class StudentCreateRequestDto {
     private Integer age;
     private String major;
 }
+

@@ -1,9 +1,9 @@
-package hello.numberone.service;
+package hello.numberone.domain.student.service;
 
-import hello.numberone.dto.StudentCreateRequestDto;
-import hello.numberone.dto.StudentResponseDto;
-import hello.numberone.entity.Student;
-import hello.numberone.repository.StudentRepository;
+import hello.numberone.domain.student.dto.StudentCreateRequestDto;
+import hello.numberone.domain.student.dto.StudentResponseDto;
+import hello.numberone.domain.student.entity.Student;
+import hello.numberone.domain.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -63,3 +63,4 @@ public class StudentService {
         studentRepository.delete(student);
     }
 }
+
