@@ -2,6 +2,7 @@ package hello.numberone.service;
 
 import hello.numberone.dto.StudentCreateRequestDto;
 import hello.numberone.dto.StudentResponseDto;
+import hello.numberone.entity.Profile;
 import hello.numberone.entity.Student;
 import hello.numberone.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,12 @@ public class StudentService {
                 request.getMajor()
         );
 
+        Profile profile = new Profile();
+        profile.setBio(request.getBio());
+        profile.setPhoneNum(request.getPhoneNum());
+        profile.setStudent(student);
+
+        student.setProfile(profile);
         Student updatedStudent = studentRepository.save(student);
         return new StudentResponseDto(updatedStudent);
     }
