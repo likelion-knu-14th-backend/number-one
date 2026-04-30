@@ -2,8 +2,10 @@ package hello.numberone.service;
 
 import hello.numberone.dto.StudentCreateRequestDto;
 import hello.numberone.dto.StudentResponseDto;
+import hello.numberone.entity.Profile;
 import hello.numberone.entity.Student;
 import hello.numberone.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService {
 
+
     private final StudentRepository studentRepository;
 
+    @Transactional
     public StudentResponseDto createStudent(StudentCreateRequestDto request) {
         Student student = new Student(
                 request.getName(),
@@ -22,6 +26,13 @@ public class StudentService {
                 request.getAge(),
                 request.getMajor()
         );
+
+        Profile profile = new Profile();
+        profile.setBio(request.getBio());
+        profile.setPhoneNum(request.getPhoneNum());
+        profile.setStudent(student);
+
+        student.setProfile(profile);
 
         Student savedStudent = studentRepository.save(student);
         return new StudentResponseDto(savedStudent);
