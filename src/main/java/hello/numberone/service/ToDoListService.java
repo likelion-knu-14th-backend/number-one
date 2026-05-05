@@ -3,7 +3,10 @@ package hello.numberone.service;
 import hello.numberone.data.dto.ToDoListRequestDto;
 import hello.numberone.data.dto.ToDoListResponseDto;
 import hello.numberone.data.entity.ToDoList;
+import hello.numberone.data.entity.User;
 import hello.numberone.data.repository.ToDoListRepository;
+import hello.numberone.data.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToDoListService {
 
+    private final UserRepository userRepository;
     private final ToDoListRepository toDoListRepository;
 
-    public ToDoListResponseDto createTask(ToDoListRequestDto request) {
+    @Transactional
+    public ToDoListResponseDto createTask(Long userId, ToDoListRequestDto request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
         ToDoList task = new ToDoList(
                 request.getNumber(),
                 request.getTitle(),
@@ -24,27 +32,26 @@ public class ToDoListService {
                 request.getPriority()
         );
 
-        ToDoList savedTask = toDoListRepository.save(task);
-        return new ToDoListResponseDto(savedTask);
+        task.setUser(user);
+        toDoListRepository.save(task);
+        return new ToDoListResponseDto(task);
     }
 
-    public List<ToDoListResponseDto> getTasks() {
-        return toDoListRepository.findAll()
+    public List<ToDoListResponseDto> getTasks(Long userId) {
+        return toDoListRepository.findAllByUserId(userId)
                 .stream()
                 .map(ToDoListResponseDto::new)
                 .toList();
     }
 
-    public ToDoListResponseDto getTask(String number) {
-        ToDoList toDoList = toDoListRepository.findByNumber(number)
-                .orElseThrow(() -> new IllegalArgumentException("해당 task가 없습니다"));
-
+    public ToDoListResponseDto getTask(Long userId, Long id) {
+        ToDoList toDoList = findUserTask(userId, id);
         return new ToDoListResponseDto(toDoList);
     }
 
-    public ToDoListResponseDto updateTask(String number, ToDoListRequestDto request) {
-        ToDoList toDoList = toDoListRepository.findByNumber(number)
-                .orElseThrow(() -> new IllegalArgumentException("해당 task가 없습니다"));
+    @Transactional
+    public ToDoListResponseDto updateTask(Long userId, Long id, ToDoListRequestDto request) {
+        ToDoList toDoList = findUserTask(userId, id);
 
         toDoList.update(
                 request.getNumber(),
@@ -54,24 +61,25 @@ public class ToDoListService {
                 request.getPriority()
         );
 
-        ToDoList updatedTask = toDoListRepository.save(toDoList);
-        return new ToDoListResponseDto(updatedTask);
+        return new ToDoListResponseDto(toDoList);
     }
 
-    public void deleteTask(String number) {
-        ToDoList toDoList = toDoListRepository.findByNumber(number)
-                .orElseThrow(() -> new IllegalArgumentException("해당 task가 없습니다"));
-
+    @Transactional
+    public void deleteTask(Long userId, Long id) {
+        ToDoList toDoList = findUserTask(userId, id);
         toDoListRepository.delete(toDoList);
     }
 
-    public ToDoListResponseDto finishTask(String number) {
-        ToDoList toDoList = toDoListRepository.findByNumber(number)
-                .orElseThrow(() -> new IllegalArgumentException("해당 task가 없습니다"));
-
+    @Transactional
+    public ToDoListResponseDto finishTask(Long userId, Long id) {
+        ToDoList toDoList = findUserTask(userId, id);
         toDoList.finish();
+        return new ToDoListResponseDto(toDoList);
+    }
 
-        ToDoList finishedTask = toDoListRepository.save(toDoList);
-        return new ToDoListResponseDto(finishedTask);
+
+    private ToDoList findUserTask(Long userId, Long id) {
+        return toDoListRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 task가 없습니다"));
     }
 }

@@ -6,7 +6,6 @@ import hello.numberone.service.ToDoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,35 +16,50 @@ public class ToDoListController {
     private final ToDoListService toDoListService;
 
     @PostMapping
-    public ToDoListResponseDto createTask(@RequestBody ToDoListRequestDto request) {
-        return toDoListService.createTask(request);
+    public ToDoListResponseDto createTask(
+            @RequestHeader("USER-ID") Long userId,
+            @RequestBody ToDoListRequestDto request
+    ) {
+        return toDoListService.createTask(userId, request);
     }
 
     @GetMapping
-    public List<ToDoListResponseDto> getTasks() {
-        return toDoListService.getTasks();
+    public List<ToDoListResponseDto> getTasks(
+            @RequestHeader("USER-ID") Long userId
+    ) {
+        return toDoListService.getTasks(userId);
     }
 
-    @GetMapping("/{number}")
-    public ToDoListResponseDto getTask(@PathVariable String number) {
-        return toDoListService.getTask(number);
+    @GetMapping("/{id}")
+    public ToDoListResponseDto getTask(
+            @RequestHeader("USER-ID") Long userId,
+            @PathVariable Long id
+    ) {
+        return toDoListService.getTask(userId, id);
     }
 
-    @PutMapping("/{number}")
+    @PutMapping("/{id}")
     public ToDoListResponseDto updateTask(
-            @PathVariable String number,
+            @RequestHeader("USER-ID") Long userId,
+            @PathVariable Long id,
             @RequestBody ToDoListRequestDto request
     ) {
-        return toDoListService.updateTask(number, request);
+        return toDoListService.updateTask(userId, id, request);
     }
 
-    @DeleteMapping("/{number}")
-    public void deleteTask(@PathVariable String number) {
-        toDoListService.deleteTask(number);
+    @DeleteMapping("/{id}")
+    public void deleteTask(
+            @RequestHeader("USER-ID") Long userId,
+            @PathVariable Long id
+    ) {
+        toDoListService.deleteTask(userId, id);
     }
 
-    @PatchMapping("/{number}")
-    public ToDoListResponseDto finishTask(@PathVariable String number) {
-        return toDoListService.finishTask(number);
+    @PatchMapping("/{id}")
+    public ToDoListResponseDto finishTask(
+            @RequestHeader("USER-ID") Long userId,
+            @PathVariable Long id
+    ) {
+        return toDoListService.finishTask(userId, id);
     }
 }
