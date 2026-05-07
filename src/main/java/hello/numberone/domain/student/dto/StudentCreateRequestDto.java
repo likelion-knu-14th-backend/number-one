@@ -11,5 +11,9 @@ public class StudentCreateRequestDto {
     private String studentNumber;
     private Integer age;
     private String major;
+
+    private String bio;
+    private String phoneNum;
+
 }
 
