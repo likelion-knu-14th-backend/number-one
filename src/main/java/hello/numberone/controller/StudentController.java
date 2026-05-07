@@ -3,6 +3,7 @@ package hello.numberone.controller;
 import hello.numberone.dto.StudentCreateRequestDto;
 import hello.numberone.dto.StudentResponseDto;
 import hello.numberone.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,8 @@ public class StudentController {
 
     // 학생 등록
     @PostMapping
-    public StudentResponseDto createStudent(@RequestBody StudentCreateRequestDto request) {
+    public StudentResponseDto createStudent(
+            @Valid @RequestBody StudentCreateRequestDto request) {
         return studentService.createStudent(request);
     }
 
@@ -37,7 +39,7 @@ public class StudentController {
     @PutMapping("/{studentNumber}")
     public StudentResponseDto updateStudent(
             @PathVariable String studentNumber,
-            @RequestBody StudentCreateRequestDto request
+            @Valid @RequestBody StudentCreateRequestDto request
     ) {
         return studentService.updateStudent(studentNumber, request);
     }
