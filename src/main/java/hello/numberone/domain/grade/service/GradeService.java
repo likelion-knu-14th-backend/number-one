@@ -44,4 +44,27 @@ public class GradeService {
                 .map(GradeResponseDto::new)
                 .toList();
     }
+
+    public GradeResponseDto addStudentGrade(String studentNumber, GradeRequestDto request) {
+        Student student = studentRepository.findByStudentNumber(studentNumber)
+                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+
+        Grade grade = new Grade();
+        grade.setSubjectName(request.getSubjectName());
+        grade.setGrade(request.getGrade());
+        grade.setStudent(student);
+
+        Grade savedGrade = gradeRepository.save(grade);
+        return new GradeResponseDto(savedGrade);
+    }
+
+    public void deleteStudentGrade(String studentNumber, Long gradeId) {
+        Student student = studentRepository.findByStudentNumber(studentNumber)
+                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+
+        Grade grade = gradeRepository.findByIdAndStudent(gradeId, student)
+                .orElseThrow(() -> new IllegalArgumentException("해당 성적이 존재하지 않습니다."));
+
+        gradeRepository.delete(grade);
+    }
 }

@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class GradeResponseDto {
     private String subjectName;
     private String grade;
+    private Long id;
 
     public GradeResponseDto(Grade grade) {
         this.subjectName = grade.getSubjectName();
         this.grade = grade.getGrade();
+        this.id = grade.getId();
     }
 }

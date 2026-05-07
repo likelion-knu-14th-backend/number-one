@@ -27,4 +27,20 @@ public class GradeController {
             @PathVariable("studentNumber") String studentNumber) {
         return gradeService.getStudentGrade(studentNumber);
     }
+
+    @PostMapping("/{studentNumber}/single")
+    public GradeResponseDto addStudentGrade(
+            @PathVariable("studentNumber") String studentNumber,
+            @RequestBody GradeRequestDto gradeRequestDto
+    ) {
+        return gradeService.addStudentGrade(studentNumber, gradeRequestDto);
+    }
+
+    @DeleteMapping("/{studentNumber}/{gradeId}")
+    public void deleteStudentGrade(
+            @PathVariable("studentNumber") String studentNumber,
+            @PathVariable("gradeId") Long gradeId
+    ) {
+        gradeService.deleteStudentGrade(studentNumber, gradeId);
+    }
 }
