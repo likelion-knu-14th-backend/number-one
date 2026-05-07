@@ -6,6 +6,7 @@ import hello.numberone.domain.grade.entity.Grade;
 import hello.numberone.domain.grade.repository.GradeRepository;
 import hello.numberone.domain.student.entity.Student;
 import hello.numberone.domain.student.repository.StudentRepository;
+import hello.numberone.infra.exception.StudentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class GradeService {
     public void uploadStudentGrade(
             String studentNumber, List<GradeRequestDto> gradeRequestDtoList) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         List<Grade> gradeList = gradeRequestDtoList.stream()
                 .map(dto -> {
@@ -36,7 +37,7 @@ public class GradeService {
 
     public List<GradeResponseDto> getStudentGrade(String studentNumber) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         List<Grade> gradeList = gradeRepository.findAllByStudent(student);
 
@@ -47,7 +48,7 @@ public class GradeService {
 
     public GradeResponseDto addStudentGrade(String studentNumber, GradeRequestDto request) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         Grade grade = new Grade();
         grade.setSubjectName(request.getSubjectName());
@@ -60,10 +61,10 @@ public class GradeService {
 
     public void deleteStudentGrade(String studentNumber, Long gradeId) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         Grade grade = gradeRepository.findByIdAndStudent(gradeId, student)
-                .orElseThrow(() -> new IllegalArgumentException("해당 성적이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         gradeRepository.delete(grade);
     }

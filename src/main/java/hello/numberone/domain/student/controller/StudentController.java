@@ -5,6 +5,7 @@ import hello.numberone.domain.student.dto.StudentResponseDto;
 import hello.numberone.domain.student.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class StudentController {
     // 학생 등록
     @PostMapping
     @Operation(summary = "학생 등록")
-    public StudentResponseDto createStudent(@RequestBody StudentCreateRequestDto request) {
+    public StudentResponseDto createStudent(@Valid @RequestBody StudentCreateRequestDto request) {
         return studentService.createStudent(request);
     }
 
@@ -44,7 +45,7 @@ public class StudentController {
     @Operation(summary = "학번 기준 수정")
     public StudentResponseDto updateStudent(
             @PathVariable String studentNumber,
-            @RequestBody StudentCreateRequestDto request
+            @Valid @RequestBody StudentCreateRequestDto request
     ) {
         return studentService.updateStudent(studentNumber, request);
     }

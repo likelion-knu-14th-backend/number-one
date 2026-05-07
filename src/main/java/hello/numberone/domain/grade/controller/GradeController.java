@@ -3,6 +3,7 @@ package hello.numberone.domain.grade.controller;
 import hello.numberone.domain.grade.dto.GradeRequestDto;
 import hello.numberone.domain.grade.dto.GradeResponseDto;
 import hello.numberone.domain.grade.service.GradeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class GradeController {
     @PostMapping("/{studentNumber}")
     public void uploadStudentGrade(
             @PathVariable("studentNumber") String studentNumber,
+            @Valid
             @RequestBody List<GradeRequestDto> gradeRequestDtoList
     ) {
         gradeService.uploadStudentGrade(studentNumber, gradeRequestDtoList);
