@@ -1,5 +1,6 @@
 package hello.numberone.service;
 
+import hello.numberone.data.dto.ProfileRequestDto;
 import hello.numberone.data.dto.UserRequestDto;
 import hello.numberone.data.dto.UserResponseDto;
 import hello.numberone.data.entity.Profile;
@@ -51,18 +52,15 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponseDto updateUser(String username, UserRequestDto request) {
+    public UserResponseDto updateProfile(String username, ProfileRequestDto request) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
 
-        user.update(
-                request.getUsername(),
-                request.getEmail()
-        );
-
         if (user.getProfile() != null) {
-            user.getProfile().setBio(request.getBio());
-            user.getProfile().setPhoneNum(request.getPhoneNum());
+            user.getProfile().update(
+                    request.getBio(),
+                    request.getPhoneNum()
+            );
         }
 
         return new UserResponseDto(user);

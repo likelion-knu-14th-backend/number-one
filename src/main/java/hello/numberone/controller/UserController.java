@@ -1,5 +1,6 @@
 package hello.numberone.controller;
 
+import hello.numberone.data.dto.ProfileRequestDto;
 import hello.numberone.data.dto.UserRequestDto;
 import hello.numberone.data.dto.UserResponseDto;
 import hello.numberone.service.UserService;
@@ -33,9 +34,9 @@ public class UserController {
     @PutMapping("/{username}")
     public UserResponseDto updateUser(
             @PathVariable String username,
-            @RequestBody UserRequestDto request
+            @RequestBody ProfileRequestDto request
     ) {
-        return userService.updateUser(username, request);
+        return userService.updateProfile(username, request);
     }
 
     @DeleteMapping("/{username}")

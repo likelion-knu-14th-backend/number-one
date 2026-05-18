@@ -20,4 +20,9 @@ public class Profile {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void update(String bio, String phoneNum) {
+        this.bio = bio;
+        this.phoneNum = phoneNum;
+    }
 }
