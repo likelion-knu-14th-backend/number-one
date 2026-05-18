@@ -6,6 +6,8 @@ import hello.numberone.data.entity.ToDoList;
 import hello.numberone.data.entity.User;
 import hello.numberone.data.repository.ToDoListRepository;
 import hello.numberone.data.repository.UserRepository;
+import hello.numberone.exception.TaskNotFoundException;
+import hello.numberone.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class ToDoListService {
     @Transactional
     public ToDoListResponseDto createTask(Long userId, ToDoListRequestDto request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         ToDoList task = new ToDoList(
                 request.getNumber(),
@@ -80,6 +82,6 @@ public class ToDoListService {
 
     private ToDoList findUserTask(Long userId, Long id) {
         return toDoListRepository.findByIdAndUserId(id, userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 task가 없습니다"));
+                .orElseThrow(TaskNotFoundException::new);
     }
 }

@@ -5,6 +5,7 @@ import hello.numberone.data.dto.UserResponseDto;
 import hello.numberone.data.entity.Profile;
 import hello.numberone.data.entity.User;
 import hello.numberone.data.repository.UserRepository;
+import hello.numberone.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class UserService {
 
     public UserResponseDto getUser(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         return new UserResponseDto(user);
     }
@@ -52,7 +53,7 @@ public class UserService {
     @Transactional
     public UserResponseDto updateUser(String username, UserRequestDto request) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         user.update(
                 request.getUsername(),
@@ -69,7 +70,7 @@ public class UserService {
 
     public void deleteUser(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         userRepository.delete(user);
     }
