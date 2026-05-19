@@ -4,6 +4,7 @@ import hello.numberone.dto.GradeRequestDto;
 import hello.numberone.dto.GradeResponseDto;
 import hello.numberone.entity.Grade;
 import hello.numberone.entity.Student;
+import hello.numberone.exception.StudentNotFoundException;
 import hello.numberone.repository.GradeRepository;
 import hello.numberone.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class GradeService {
     public void uploadStudentGrade(
             String studentNumber, List<GradeRequestDto> gradeRequestDtoList) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         List<Grade> gradeList = gradeRequestDtoList.stream()
                 .map(dto -> {
@@ -36,7 +37,7 @@ public class GradeService {
 
     public List<GradeResponseDto> getStudentGrade(String studentNumber) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+                .orElseThrow(StudentNotFoundException::new);
 
         List<Grade> gradeList = gradeRepository.findAllByStudent(student);
 
