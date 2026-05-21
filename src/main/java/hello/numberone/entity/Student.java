@@ -1,5 +1,6 @@
 package hello.numberone.entity;
 
+import hello.numberone.auth.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,15 @@ public class Student {
     private Integer age;
 
     private String major;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Profile profile;
