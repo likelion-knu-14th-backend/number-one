@@ -1,6 +1,5 @@
-package hello.numberone.product.data.entity;
+package hello.numberone.user.data.entity;
 
-import hello.numberone.user.data.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,7 @@
-package hello.numberone.product.exception;
+package hello.numberone.common.response;
 
+import hello.numberone.product.exception.TaskNotFoundException;
+import hello.numberone.user.data.exception.UserNotFoundException;
 import hello.numberone.user.data.exception.AlreadyEmailExistsException;
 import hello.numberone.user.data.exception.InvalidPasswordException;
 import org.springframework.http.HttpStatus;

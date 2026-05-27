@@ -2,7 +2,7 @@ package hello.numberone.common.security;
 
 import hello.numberone.user.data.entity.User;
 import hello.numberone.user.data.repository.UserRepository;
-import hello.numberone.product.exception.UserNotFoundException;
+import hello.numberone.user.data.exception.UserNotFoundException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

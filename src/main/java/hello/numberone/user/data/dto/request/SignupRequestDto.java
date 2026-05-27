@@ -18,4 +18,7 @@ public class SignupRequestDto {
 
     @NotBlank
     private String name;
+
+    private String bio;
+    private String phoneNum;
 }

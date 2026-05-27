@@ -1,4 +1,4 @@
-package hello.numberone.product.exception;
+package hello.numberone.common.response;
 
 public record ErrorResponse(
         String code,

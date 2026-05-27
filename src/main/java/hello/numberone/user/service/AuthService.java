@@ -4,12 +4,14 @@ import hello.numberone.common.security.JwtTokenProvider;
 import hello.numberone.user.data.dto.request.LoginRequestDto;
 import hello.numberone.user.data.dto.request.SignupRequestDto;
 import hello.numberone.user.data.dto.response.TokenResponseDto;
+import hello.numberone.user.data.entity.Profile;
 import hello.numberone.user.data.enums.Role;
 import hello.numberone.user.data.exception.AlreadyEmailExistsException;
 import hello.numberone.user.data.exception.InvalidPasswordException;
 import hello.numberone.user.data.entity.User;
+import hello.numberone.user.data.repository.ProfileRepository;
 import hello.numberone.user.data.repository.UserRepository;
-import hello.numberone.product.exception.UserNotFoundException;
+import hello.numberone.user.data.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -38,6 +41,13 @@ public class AuthService {
         user.setRole(Role.USER);
 
         userRepository.save(user);
+
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profile.setBio(request.getBio());
+        profile.setPhoneNum(request.getPhoneNum());
+
+        profileRepository.save(profile);
     }
 
     public TokenResponseDto login(LoginRequestDto request) {

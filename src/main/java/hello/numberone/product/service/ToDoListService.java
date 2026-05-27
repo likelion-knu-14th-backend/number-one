@@ -7,7 +7,7 @@ import hello.numberone.user.data.entity.User;
 import hello.numberone.product.data.repository.ToDoListRepository;
 import hello.numberone.user.data.repository.UserRepository;
 import hello.numberone.product.exception.TaskNotFoundException;
-import hello.numberone.product.exception.UserNotFoundException;
+import hello.numberone.user.data.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package hello.numberone.product.exception;
+package hello.numberone.user.data.exception;
 
 public class UserNotFoundException extends RuntimeException {
 

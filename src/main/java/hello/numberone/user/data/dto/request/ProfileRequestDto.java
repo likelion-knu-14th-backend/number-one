@@ -1,4 +1,4 @@
-package hello.numberone.product.data.dto;
+package hello.numberone.user.data.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

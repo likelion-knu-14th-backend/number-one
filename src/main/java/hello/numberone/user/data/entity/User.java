@@ -1,6 +1,5 @@
 package hello.numberone.user.data.entity;
 
-import hello.numberone.product.data.entity.Profile;
 import hello.numberone.user.data.enums.Role;
 import hello.numberone.product.data.entity.ToDoList;
 import jakarta.persistence.*;
