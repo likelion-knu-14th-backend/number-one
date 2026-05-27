@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity // Spring Security 기능 활성화
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -42,8 +42,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
-                                "/api/v1/auth/**",
-                                "/api/v1/test/**"
+                                "/api/v1/auth/**"
                         ).permitAll()
                         // 그 외 요청은 인증 필요
                         .anyRequest().authenticated()

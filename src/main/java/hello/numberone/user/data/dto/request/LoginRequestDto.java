@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+
 public class LoginRequestDto {
 
     @Email
@@ -15,4 +16,5 @@ public class LoginRequestDto {
 
     @NotBlank
     private String password;
+
 }

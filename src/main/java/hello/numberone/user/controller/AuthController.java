@@ -30,7 +30,6 @@ public class AuthController {
     public TokenResponseDto login(
             @Valid @RequestBody LoginRequestDto request
     ) {
-        authService.login(request);
         return authService.login(request);
     }
 }

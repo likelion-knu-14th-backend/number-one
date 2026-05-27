@@ -33,7 +33,6 @@ public class JwtTokenProvider {
         );
         this.userRepository = userRepository;
     }
-
     public String generateToken(User user) {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + expirationTime);
@@ -51,7 +50,7 @@ public class JwtTokenProvider {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
@@ -61,7 +60,7 @@ public class JwtTokenProvider {
             Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
