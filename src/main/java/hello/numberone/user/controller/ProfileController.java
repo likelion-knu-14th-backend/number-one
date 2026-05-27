@@ -4,6 +4,8 @@ import hello.numberone.user.data.dto.request.ProfileRequestDto;
 import hello.numberone.user.data.dto.response.ProfileResponseDto;
 import hello.numberone.user.service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,11 +15,11 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ProfileResponseDto updateProfile(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @RequestBody ProfileRequestDto request
     ) {
-        return profileService.updateProfile(userId, request);
+        return profileService.updateProfile(email, request);
     }
 }
