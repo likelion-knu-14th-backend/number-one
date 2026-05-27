@@ -4,6 +4,7 @@ import hello.numberone.product.data.dto.ToDoListRequestDto;
 import hello.numberone.product.data.dto.ToDoListResponseDto;
 import hello.numberone.product.service.ToDoListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,49 +18,49 @@ public class ToDoListController {
 
     @PostMapping
     public ToDoListResponseDto createTask(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @RequestBody ToDoListRequestDto request
     ) {
-        return toDoListService.createTask(userId, request);
+        return toDoListService.createTask(email, request);
     }
 
     @GetMapping
     public List<ToDoListResponseDto> getTasks(
-            @RequestHeader("USER-ID") Long userId
+            @AuthenticationPrincipal String email
     ) {
-        return toDoListService.getTasks(userId);
+        return toDoListService.getTasks(email);
     }
 
     @GetMapping("/{id}")
     public ToDoListResponseDto getTask(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @PathVariable Long id
     ) {
-        return toDoListService.getTask(userId, id);
+        return toDoListService.getTask(email, id);
     }
 
     @PutMapping("/{id}")
     public ToDoListResponseDto updateTask(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @PathVariable Long id,
             @RequestBody ToDoListRequestDto request
     ) {
-        return toDoListService.updateTask(userId, id, request);
+        return toDoListService.updateTask(email, id, request);
     }
 
     @DeleteMapping("/{id}")
     public void deleteTask(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @PathVariable Long id
     ) {
-        toDoListService.deleteTask(userId, id);
+        toDoListService.deleteTask(email, id);
     }
 
     @PatchMapping("/{id}")
     public ToDoListResponseDto finishTask(
-            @RequestHeader("USER-ID") Long userId,
+            @AuthenticationPrincipal String email,
             @PathVariable Long id
     ) {
-        return toDoListService.finishTask(userId, id);
+        return toDoListService.finishTask(email, id);
     }
 }

@@ -22,8 +22,8 @@ public class ToDoListService {
     private final ToDoListRepository toDoListRepository;
 
     @Transactional
-    public ToDoListResponseDto createTask(Long userId, ToDoListRequestDto request) {
-        User user = userRepository.findById(userId)
+    public ToDoListResponseDto createTask(String email, ToDoListRequestDto request) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(UserNotFoundException::new);
 
         ToDoList task = new ToDoList(
@@ -39,21 +39,21 @@ public class ToDoListService {
         return new ToDoListResponseDto(task);
     }
 
-    public List<ToDoListResponseDto> getTasks(Long userId) {
-        return toDoListRepository.findAllByUserId(userId)
+    public List<ToDoListResponseDto> getTasks(String email) {
+        return toDoListRepository.findAllByUserEmail(email)
                 .stream()
                 .map(ToDoListResponseDto::new)
                 .toList();
     }
 
-    public ToDoListResponseDto getTask(Long userId, Long id) {
-        ToDoList toDoList = findUserTask(userId, id);
+    public ToDoListResponseDto getTask(String email, Long id) {
+        ToDoList toDoList = findUserTask(email, id);
         return new ToDoListResponseDto(toDoList);
     }
 
     @Transactional
-    public ToDoListResponseDto updateTask(Long userId, Long id, ToDoListRequestDto request) {
-        ToDoList toDoList = findUserTask(userId, id);
+    public ToDoListResponseDto updateTask(String email, Long id, ToDoListRequestDto request) {
+        ToDoList toDoList = findUserTask(email, id);
 
         toDoList.update(
                 request.getNumber(),
@@ -67,21 +67,21 @@ public class ToDoListService {
     }
 
     @Transactional
-    public void deleteTask(Long userId, Long id) {
-        ToDoList toDoList = findUserTask(userId, id);
+    public void deleteTask(String email, Long id) {
+        ToDoList toDoList = findUserTask(email, id);
         toDoListRepository.delete(toDoList);
     }
 
     @Transactional
-    public ToDoListResponseDto finishTask(Long userId, Long id) {
-        ToDoList toDoList = findUserTask(userId, id);
+    public ToDoListResponseDto finishTask(String email, Long id) {
+        ToDoList toDoList = findUserTask(email, id);
         toDoList.finish();
         return new ToDoListResponseDto(toDoList);
     }
 
 
-    private ToDoList findUserTask(Long userId, Long id) {
-        return toDoListRepository.findByIdAndUserId(id, userId)
+    private ToDoList findUserTask(String email, Long id) {
+        return toDoListRepository.findByUserEmailAndId(email, id)
                 .orElseThrow(TaskNotFoundException::new);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ToDoListRepository extends JpaRepository<ToDoList, Long> {
 
-    Optional<ToDoList> findByIdAndUserId(Long id, Long userId);
+    Optional<ToDoList> findByUserEmailAndId(String email, Long id);
 
-    List<ToDoList> findAllByUserId(Long userId);
+    List<ToDoList> findAllByUserEmail(String email);
 }
