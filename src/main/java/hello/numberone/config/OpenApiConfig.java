@@ -1,9 +1,10 @@
 package hello.numberone.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,12 +13,19 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI().info(new Info()
-                .title("Number One API")
-                .description("Student/Movie CRUD API documentation")
-                .version("v1")
-                .contact(new Contact().name("number-one").email("dev@example.com"))
-                .license(new License().name("Apache 2.0")));
+        String schemeName = "bearerAuth";
+
+        SecurityScheme bearerScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+
+        return new OpenAPI()
+                .components(new Components().addSecuritySchemes(schemeName, bearerScheme))
+                .addSecurityItem(new SecurityRequirement().addList(schemeName))
+                .info(new Info()
+                        .title("Number One API")
+                        .description("Number One API 명세서")
+                        .version("v1"));
     }
 }
-

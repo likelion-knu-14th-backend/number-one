@@ -4,8 +4,10 @@ import hello.numberone.domain.movie.dto.MovieCreateRequestDto;
 import hello.numberone.domain.movie.dto.MovieResponseDto;
 import hello.numberone.domain.movie.entity.Movie;
 import hello.numberone.domain.movie.repository.MovieRepository;
+import hello.numberone.infra.exception.MovieNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
+    @Transactional
     public MovieResponseDto createMovie(MovieCreateRequestDto request) {
         Movie movie = new Movie(
                 request.getTitle(),
@@ -29,6 +32,7 @@ public class MovieService {
         return new MovieResponseDto(savedMovie);
     }
 
+    @Transactional(readOnly = true)
     public List<MovieResponseDto> getMovies() {
         return movieRepository.findAll()
                 .stream()
@@ -36,23 +40,26 @@ public class MovieService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public MovieResponseDto getMovie(Long id) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화가 존재하지 않습니다."));
+                .orElseThrow(MovieNotFoundException::new);
 
         return new MovieResponseDto(movie);
     }
 
+    @Transactional(readOnly = true)
     public MovieResponseDto getMovieByTitle(String title) {
         Movie movie = movieRepository.findByTitle(title)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화가 존재하지 않습니다."));
+                .orElseThrow(MovieNotFoundException::new);
 
         return new MovieResponseDto(movie);
     }
 
+    @Transactional
     public MovieResponseDto updateMovie(Long id, MovieCreateRequestDto request) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화가 존재하지 않습니다."));
+                .orElseThrow(MovieNotFoundException::new);
 
         movie.update(
                 request.getTitle(),
@@ -67,11 +74,11 @@ public class MovieService {
         return new MovieResponseDto(updatedMovie);
     }
 
+    @Transactional
     public void deleteMovie(Long id) {
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화가 존재하지 않습니다."));
+                .orElseThrow(MovieNotFoundException::new);
 
         movieRepository.delete(movie);
     }
 }
-

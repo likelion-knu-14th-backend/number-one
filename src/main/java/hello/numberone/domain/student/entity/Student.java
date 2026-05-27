@@ -1,5 +1,6 @@
 package hello.numberone.domain.student.entity;
 
+import hello.numberone.domain.auth.enums.Role;
 import hello.numberone.domain.grade.entity.Profile;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,6 +25,15 @@ public class Student {
     private Integer age;
 
     private String major;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Student(String name, String studentNumber, Integer age, String major) {
         this.name = name;

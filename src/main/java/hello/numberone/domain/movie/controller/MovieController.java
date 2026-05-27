@@ -5,6 +5,7 @@ import hello.numberone.domain.movie.dto.MovieResponseDto;
 import hello.numberone.domain.movie.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class MovieController {
     // 영화 등록
     @PostMapping
     @Operation(summary = "영화 등록")
-    public MovieResponseDto createMovie(@RequestBody MovieCreateRequestDto request) {
+    public MovieResponseDto createMovie(@Valid @RequestBody MovieCreateRequestDto request) {
         return movieService.createMovie(request);
     }
 
@@ -51,7 +52,7 @@ public class MovieController {
     @Operation(summary = "영화 수정")
     public MovieResponseDto updateMovie(
             @PathVariable Long id,
-            @RequestBody MovieCreateRequestDto request
+            @Valid @RequestBody MovieCreateRequestDto request
     ) {
         return movieService.updateMovie(id, request);
     }
@@ -63,4 +64,3 @@ public class MovieController {
         movieService.deleteMovie(id);
     }
 }
-
