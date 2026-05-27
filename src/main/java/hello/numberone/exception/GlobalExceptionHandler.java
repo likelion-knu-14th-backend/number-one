@@ -13,4 +13,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse("SHOP_NOT_FOUND", e.getMessage()));
     }
+
+    @ExceptionHandler(AlreadyEmailExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(AlreadyEmailExistsException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("EMAIL_ALREADY_EXISTS", e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPassword(InvalidPasswordException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("INVALID_PASSWORD", e.getMessage()));
+    }
+
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleStudentNotFound(StudentNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("STUDENT_NOT_FOUND", e.getMessage()));
+    }
 }

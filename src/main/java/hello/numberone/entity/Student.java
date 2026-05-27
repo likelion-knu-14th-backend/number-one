@@ -16,13 +16,21 @@ public class Student {
     private Long id;
 
     private String name;
-
     @Column(unique = true, nullable = false)
     private String studentNumber;
 
     private Integer age;
 
     private String major;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Profile profile;
