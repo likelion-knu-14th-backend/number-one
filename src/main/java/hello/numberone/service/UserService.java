@@ -22,7 +22,7 @@ public class UserService {
     @Transactional
     public UserResponseDto createUser(UserRequestDto request) {
         User user = new User(
-                request.getUsername(),
+                request.getName(),
                 request.getEmail()
         );
 
@@ -44,16 +44,16 @@ public class UserService {
                 .toList();
     }
 
-    public UserResponseDto getUser(String username) {
-        User user = userRepository.findByUsername(username)
+    public UserResponseDto getUser(String name) {
+        User user = userRepository.findByName(name)
                 .orElseThrow(UserNotFoundException::new);
 
         return new UserResponseDto(user);
     }
 
     @Transactional
-    public UserResponseDto updateProfile(String username, ProfileRequestDto request) {
-        User user = userRepository.findByUsername(username)
+    public UserResponseDto updateProfile(String name, ProfileRequestDto request) {
+        User user = userRepository.findByName(name)
                 .orElseThrow(UserNotFoundException::new);
 
         if (user.getProfile() != null) {
@@ -66,8 +66,8 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
-    public void deleteUser(String username) {
-        User user = userRepository.findByUsername(username)
+    public void deleteUser(String name) {
+        User user = userRepository.findByName(name)
                 .orElseThrow(UserNotFoundException::new);
 
         userRepository.delete(user);
