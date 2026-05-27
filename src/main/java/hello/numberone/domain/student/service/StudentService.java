@@ -22,7 +22,9 @@ public class StudentService {
                 request.getName(),
                 request.getStudentNumber(),
                 request.getAge(),
-                request.getMajor()
+                request.getMajor(),
+                request.getEmail(),
+                request.getPassword()
         );
 
         Student savedStudent = studentRepository.save(student);
@@ -43,6 +45,12 @@ public class StudentService {
         return new StudentResponseDto(student);
     }
 
+    public StudentResponseDto getStudentByEmail(String email) {
+        Student student = studentRepository.findByEmail(email)
+                .orElseThrow(StudentNotFoundException::new);
+        return new StudentResponseDto(student);
+    }
+
     public StudentResponseDto updateStudent(String studentNumber, StudentCreateRequestDto request) {
         Student student = studentRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(StudentNotFoundException::new);
@@ -51,7 +59,9 @@ public class StudentService {
                 request.getName(),
                 request.getStudentNumber(),
                 request.getAge(),
-                request.getMajor()
+                request.getMajor(),
+                request.getEmail(),
+                request.getPassword()
         );
 
         Profile profile = new Profile();
@@ -72,4 +82,3 @@ public class StudentService {
         studentRepository.delete(student);
     }
 }
-

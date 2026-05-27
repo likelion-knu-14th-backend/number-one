@@ -35,22 +35,25 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Student(String name, String studentNumber, Integer age, String major) {
+    public Student(String name, String studentNumber, Integer age, String major, String email, String password) {
         this.name = name;
         this.studentNumber = studentNumber;
         this.age = age;
         this.major = major;
+        this.email = email;
+        this.password = password;
     }
 
-    public void update(String name, String studentNumber, Integer age, String major) {
+    public void update(String name, String studentNumber, Integer age, String major, String email, String password) {
         this.name = name;
         this.studentNumber = studentNumber;
         this.age = age;
         this.major = major;
+        this.email = email;
+        this.password = password;
     }
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Profile profile;
 
 }
-

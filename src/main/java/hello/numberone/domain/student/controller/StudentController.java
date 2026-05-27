@@ -1,5 +1,6 @@
 package hello.numberone.domain.student.controller;
 
+import hello.numberone.domain.auth.common.SecurityUtil;
 import hello.numberone.domain.student.dto.StudentCreateRequestDto;
 import hello.numberone.domain.student.dto.StudentResponseDto;
 import hello.numberone.domain.student.service.StudentService;
@@ -56,5 +57,11 @@ public class StudentController {
     public void deleteStudent(@PathVariable String studentNumber) {
         studentService.deleteStudent(studentNumber);
     }
-}
 
+    @GetMapping("/me")
+    @Operation(summary = "내 정보 조회")
+    public StudentResponseDto getMyInfo() {
+        String email = SecurityUtil.getCurrentEmail();
+        return studentService.getStudentByEmail(email);
+    }
+}
