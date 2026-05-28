@@ -26,12 +26,15 @@ public class SwaggerConfig {
                 .info(apiInfo())
                 .addSecurityItem(new SecurityRequirement().addList(AUTH_TOKEN_HEADER))
                 .components(new Components()
+
                         .addSecuritySchemes(AUTH_TOKEN_HEADER, new SecurityScheme()
                                 .name(AUTH_TOKEN_HEADER)
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer")
                                 .bearerFormat("JWT")
                         )
+
                 );
+
     }
 }

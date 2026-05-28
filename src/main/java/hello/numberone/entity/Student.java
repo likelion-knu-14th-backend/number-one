@@ -28,6 +28,9 @@ public class Student {
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Profile profile;
 
+    private String provider;
+    private String providerId;
+
     public Student(String name, String studentNumber, Integer age, String major) {
         this.name = name;
         this.studentNumber = studentNumber;
