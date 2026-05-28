@@ -34,6 +34,9 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String provider;
+    private String providerId;
+
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Profile profile;
 
