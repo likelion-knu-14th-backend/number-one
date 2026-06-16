@@ -31,6 +31,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(unique = true, nullable = false)
+    private String UserNumber;
+
+    private String provider;
+    private String providerId;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
 

@@ -42,11 +42,14 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
-                                "/api/v1/auth/**"
+                                "/api/v1/auth/**",
+                                "/login-page",
+                                "/kakao-login.png"
                         ).permitAll()
                         // 그 외 요청은 인증 필요
                         .anyRequest().authenticated()
                 )
+
                 // Spring Security 기본 로그인 방식 비활성화
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
